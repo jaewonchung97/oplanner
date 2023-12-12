@@ -1,6 +1,7 @@
 package kr.ac.gachon.oplanner.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import kr.ac.gachon.oplanner.domain.Lecture;
 import kr.ac.gachon.oplanner.domain.Student;
 import kr.ac.gachon.oplanner.service.LecAddService;
 import kr.ac.gachon.oplanner.service.LectureService;
@@ -55,10 +56,10 @@ public class AdminController {
         return "admin";
     }
 
-    @GetMapping("add.do")
+    @PostMapping("add.do")
     @ResponseBody
-    public Map<String, String> addLectures(){
-        boolean saveLectures = lecAddService.updateLectures(2023, 1);
+    public Map<String, String> addLectures(@RequestBody String lecInfoResponse){
+        boolean saveLectures = lecAddService.updateLectures(lecInfoResponse);
         log.info("SaveLecture = {}", saveLectures);
         if (saveLectures){
             return Map.of("Status", "200");

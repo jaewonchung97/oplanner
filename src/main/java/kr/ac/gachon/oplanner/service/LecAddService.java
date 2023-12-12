@@ -81,15 +81,13 @@ public class LecAddService {
     }
 
     @Transactional
-    public boolean updateLectures(int year, int semester) {
+    public boolean updateLectures(String lecInfoResponse) {
         lectureRepository.clear();
-
-        String response = getLecResponse(year, semester);
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode;
         try {
-            jsonNode = objectMapper.readTree(response);
+            jsonNode = objectMapper.readTree(lecInfoResponse);
             JsonNode lectures = jsonNode.get("rows");
             for (JsonNode lectureNode : lectures) {
                 Lecture lecture = objectMapper.readValue(lectureNode.toString(), Lecture.class);
@@ -113,11 +111,11 @@ public class LecAddService {
     private void saveLecTime(String timeString, Lecture lecture) {
         String[] split = timeString.replaceAll(" ", "").split(",");
         LecTime curLecTime = new LecTime();
-        log.info("[{}] SaveLecTime\tLecName = {}", lecture.getLecNum(), lecture.getLecName());
+        log.debug("[{}] SaveLecTime\tLecName = {}", lecture.getLecNum(), lecture.getLecName());
         for (int i = 0; i < split.length; i++) {
             DayEnum curDay = parseDay(split[i].charAt(0));
             String curTimeVal = split[i].substring(1);
-            log.info("[{}] curLecTime = \tcurDay = {}\tcurTimeval={}", lecture.getLecNum(), curDay, curTimeVal);
+            log.debug("[{}] curLecTime = \tcurDay = {}\tcurTimeval={}", lecture.getLecNum(), curDay, curTimeVal);
 
             if (curLecTime.getDay() == null) {
                 curLecTime.setDay(curDay);

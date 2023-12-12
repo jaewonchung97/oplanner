@@ -23,6 +23,13 @@ public class TestController {
         this.lectureService = lectureService;
     }
 
+
+    @GetMapping("/lecture")
+    public List<Lecture> getAllLectures() {
+        return lectureService.getAllLectures();
+    }
+
+
     @GetMapping("/lecture/name")
     public List<String> getAllLecNames() {
         return lectureService.getAllLecNames();
@@ -33,14 +40,14 @@ public class TestController {
         return lectureService.getLecturesByName(lecName);
     }
 
-    @GetMapping("/lecture")
-    public List<Lecture> getAllLectures() {
-        return lectureService.getAllLectures();
+    @GetMapping("/lecture/{lecNum}")
+    public Lecture getLecByNum(@PathVariable("lecNum") String lecNum) {
+        return lectureService.getLecByLecNum(lecNum);
     }
 
-    @GetMapping("/lecture/time/{lecNum}")
+    @GetMapping("/lecture/{lecNum}/time")
     public List<LecTime> getLecTime(@PathVariable("lecNum") String lecNum) {
-        return lectureService.getLecTimes(lectureService.getLectureByLecNum(lecNum));
+        return lectureService.getLecTimes(lectureService.getLecByLecNum(lecNum));
     }
 
 }

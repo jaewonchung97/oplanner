@@ -1,12 +1,6 @@
 package kr.ac.gachon.oplanner.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.transaction.Transactional;
 import kr.ac.gachon.oplanner.domain.Student;
-import kr.ac.gachon.oplanner.domain.enums.DayEnum;
-import kr.ac.gachon.oplanner.domain.enums.LecClassification;
 import kr.ac.gachon.oplanner.domain.LecTime;
 import kr.ac.gachon.oplanner.domain.Lecture;
 import kr.ac.gachon.oplanner.repository.AttendanceRepository;
@@ -15,10 +9,7 @@ import kr.ac.gachon.oplanner.repository.LectureRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
 import java.util.*;
-
-import static kr.ac.gachon.oplanner.utils.WebRequest.getLecResponse;
 
 @Service
 @Slf4j
@@ -39,7 +30,7 @@ public class LectureService {
         return lecTimeRepository.getTimes(lecture);
     }
 
-    public Lecture getLectureByLecNum(String lecNum){
+    public Lecture getLecByLecNum(String lecNum){
         return lectureRepository.getLectureByLecNum(lecNum);
     }
 

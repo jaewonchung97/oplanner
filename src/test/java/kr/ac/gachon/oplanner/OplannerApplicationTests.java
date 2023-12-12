@@ -9,6 +9,7 @@ import kr.ac.gachon.oplanner.repository.LectureRepository;
 import kr.ac.gachon.oplanner.service.LecAddService;
 import kr.ac.gachon.oplanner.service.LectureService;
 
+import kr.ac.gachon.oplanner.utils.WebRequest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ class OplannerApplicationTests {
 
     @BeforeEach
     void beforeEach() {
-        lecAddService.updateLectures(2022, 1);
+        lecAddService.updateLectures(WebRequest.getLecResponse(2022, 1));
     }
 
     @Test
