@@ -11,5 +11,9 @@ public interface LectureRepository {
 
     List<Lecture> getAllLectures();
 
+    List<String> getAllLecNames();
+
+    List<Lecture> getLecturesByName(String lecName);
+
     void clear();
 }

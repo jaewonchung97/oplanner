@@ -4,7 +4,6 @@ CREATE TABLE student
     st_name     VARCHAR(255),
     ess_credits INT,
     opt_credits INT,
-
     PRIMARY KEY (st_num)
 );
 
@@ -32,10 +31,11 @@ create table lecture
 
 create table lec_time
 (
-    lec_num varchar(8) not null,
-    time    int        not null check (time between 1 and 15) ,
-    day     enum('MON', 'TUE', 'WED', 'THU', 'FRI'),
+    lec_num    varchar(8) not null,
+    start_time TIME       not null,
+    end_time   TIME       not null,
+    day        enum('MON', 'TUE', 'WED', 'THU', 'FRI') not null,
 
-    primary key (lec_num, time, day),
+    primary key (lec_num, start_time, end_time, day),
     foreign key (lec_num) references lecture (lec_num) on delete cascade
 );

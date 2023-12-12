@@ -35,6 +35,20 @@ public class JpaLectureRepository implements LectureRepository{
     }
 
     @Override
+    public List<String> getAllLecNames() {
+        TypedQuery<String> query = em.createQuery("select distinct l.lecName from Lecture l", String.class);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Lecture> getLecturesByName(String lecName) {
+        TypedQuery<Lecture> query = em.createQuery("select l from Lecture l where l.lecName=:lecName", Lecture.class);
+        query.setParameter("lecName", lecName);
+
+        return query.getResultList();
+    }
+
+    @Override
     public void clear() {
         em.createQuery("delete from Lecture").executeUpdate();
     }

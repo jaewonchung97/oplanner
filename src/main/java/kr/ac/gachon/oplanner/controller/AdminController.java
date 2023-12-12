@@ -2,6 +2,7 @@ package kr.ac.gachon.oplanner.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import kr.ac.gachon.oplanner.domain.Student;
+import kr.ac.gachon.oplanner.service.LecAddService;
 import kr.ac.gachon.oplanner.service.LectureService;
 import kr.ac.gachon.oplanner.service.StudentService;
 import kr.ac.gachon.oplanner.service.login.SessionConst;
@@ -20,9 +21,12 @@ public class AdminController {
     private final StudentService studentService;
     private final LectureService lectureService;
 
-    public AdminController(StudentService studentService, LectureService lectureService) {
+    private final LecAddService lecAddService;
+
+    public AdminController(StudentService studentService, LectureService lectureService, LecAddService lecAddService) {
         this.studentService = studentService;
         this.lectureService = lectureService;
+        this.lecAddService = lecAddService;
     }
 
     @GetMapping("login")
@@ -54,7 +58,7 @@ public class AdminController {
     @GetMapping("add.do")
     @ResponseBody
     public Map<String, String> addLectures(){
-        boolean saveLectures = lectureService.updateLectures(2023, 1);
+        boolean saveLectures = lecAddService.updateLectures(2023, 1);
         log.info("SaveLecture = {}", saveLectures);
         if (saveLectures){
             return Map.of("Status", "200");

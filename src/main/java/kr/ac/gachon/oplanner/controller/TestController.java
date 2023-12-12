@@ -1,41 +1,46 @@
 package kr.ac.gachon.oplanner.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-import kr.ac.gachon.oplanner.domain.Student;
-import kr.ac.gachon.oplanner.service.StudentService;
-import kr.ac.gachon.oplanner.service.login.SessionConst;
+import kr.ac.gachon.oplanner.domain.LecTime;
+import kr.ac.gachon.oplanner.domain.Lecture;
+import kr.ac.gachon.oplanner.service.LectureService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Map;
+import java.util.List;
 
 @Controller
 @Slf4j
 @RequestMapping("/test")
+@ResponseBody
 public class TestController {
-    private final StudentService studentService;
+    private final LectureService lectureService;
 
-    public TestController(StudentService studentService) {
-        this.studentService = studentService;
+    public TestController(LectureService lectureService) {
+        this.lectureService = lectureService;
     }
 
-
-    @GetMapping("/login")
-    public String loginPage(Model model, @SessionAttribute(name = SessionConst.LOGIN_STUDENT, required = false) Student student) {
-        if (student == null) {
-            model.addAttribute(new Student());
-            return "login";
-        }
-
-        return "redirect:/";
+    @GetMapping("/lecture/name")
+    public List<String> getAllLecNames() {
+        return lectureService.getAllLecNames();
     }
-    @ResponseBody
-    @GetMapping("")
-    public Map<String, String> getHome(@SessionAttribute(name = SessionConst.LOGIN_STUDENT, required = false) Student student) {
-        if (student == null) return Map.of("Status", "200", "Message", "Hello");
-        return Map.of("Status", "200", "UserName", student.getStName(), "StNum", Integer.toString(student.getStNum()));
+
+    @GetMapping("/lecture/name/{lecName}")
+    public List<Lecture> getLecturesByName(@PathVariable("lecName") String lecName) {
+        return lectureService.getLecturesByName(lecName);
     }
+
+    @GetMapping("/lecture")
+    public List<Lecture> getAllLectures() {
+        return lectureService.getAllLectures();
+    }
+
+    @GetMapping("/lecture/time/{lecNum}")
+    public List<LecTime> getLecTime(@PathVariable("lecNum") String lecNum) {
+        return lectureService.getLecTimes(lectureService.getLectureByLecNum(lecNum));
+    }
+
 }
