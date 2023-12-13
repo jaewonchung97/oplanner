@@ -23,12 +23,10 @@ public class TestController {
         this.lectureService = lectureService;
     }
 
-
     @GetMapping("/lecture")
     public List<Lecture> getAllLectures() {
         return lectureService.getAllLectures();
     }
-
 
     @GetMapping("/lecture/name")
     public List<String> getAllLecNames() {
