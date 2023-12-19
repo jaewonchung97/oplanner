@@ -4,18 +4,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
-import kr.ac.gachon.oplanner.domain.LecTime;
-import kr.ac.gachon.oplanner.domain.Lecture;
+import kr.ac.gachon.oplanner.domain.dbcolumns.LecTime;
+import kr.ac.gachon.oplanner.domain.dbcolumns.Lecture;
 import kr.ac.gachon.oplanner.domain.enums.DayEnum;
-import kr.ac.gachon.oplanner.domain.enums.LecClassification;
-import kr.ac.gachon.oplanner.repository.LecTimeRepository;
-import kr.ac.gachon.oplanner.repository.LectureRepository;
+import kr.ac.gachon.oplanner.domain.enums.ClassificationEnum;
+import kr.ac.gachon.oplanner.repository.interfaces.LecTimeRepository;
+import kr.ac.gachon.oplanner.repository.interfaces.LectureRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.sql.Time;
-
-import static kr.ac.gachon.oplanner.utils.WebRequest.getLecResponse;
 
 @Service
 @Slf4j
@@ -61,10 +59,10 @@ public class LecAddService {
         };
     }
 
-    private static LecClassification parseClassification(String classificationString) {
+    private static ClassificationEnum parseClassification(String classificationString) {
         return switch (classificationString) {
-            case "전필" -> LecClassification.MAJOR_REQUIRED;
-            case "전선" -> LecClassification.MAJOR_ELECTIVE;
+            case "전필" -> ClassificationEnum.MAJOR_REQUIRED;
+            case "전선" -> ClassificationEnum.MAJOR_ELECTIVE;
             default -> null;
         };
     }
@@ -93,6 +91,7 @@ public class LecAddService {
                 Lecture lecture = objectMapper.readValue(lectureNode.toString(), Lecture.class);
                 if (!validateLecName(lecture)) continue;
                 lecture.setClassification(parseClassification(lectureNode.get("isu_cd").asText()));
+                log.info("[SaveLecture] {}", lecture);
                 lectureRepository.save(lecture);
                 saveLecTime(lectureNode.get("lec_time").asText(), lecture);
             }
@@ -105,17 +104,19 @@ public class LecAddService {
     }
 
     /**
-     * @param timeString "월1,"월2","월3"
+     * @param timeString "월1, 월2, 월3"
      * @param lecture
      */
     private void saveLecTime(String timeString, Lecture lecture) {
         String[] split = timeString.replaceAll(" ", "").split(",");
+        // ["월1", "월2", "월3"]
         LecTime curLecTime = new LecTime();
         log.debug("[{}] SaveLecTime\tLecName = {}", lecture.getLecNum(), lecture.getLecName());
         for (int i = 0; i < split.length; i++) {
+            log.debug("[{}] Time String = {}", lecture.getLecNum(), split[i]);
             DayEnum curDay = parseDay(split[i].charAt(0));
             String curTimeVal = split[i].substring(1);
-            log.debug("[{}] curLecTime = \tcurDay = {}\tcurTimeval={}", lecture.getLecNum(), curDay, curTimeVal);
+            log.debug("[{}] curLecTime = \tcurDay = {}\tcurTimeVal={}", lecture.getLecNum(), curDay, curTimeVal);
 
             if (curLecTime.getDay() == null) {
                 curLecTime.setDay(curDay);

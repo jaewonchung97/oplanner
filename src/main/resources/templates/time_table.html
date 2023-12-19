@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Time Table</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.min.css" rel="stylesheet"/>
+
+
+    <style>
+        body {
+            height: 100vh; /* Set the height of the container to 100% viewport height */
+            display: flex; /* Use Flexbox */
+            justify-content: center; /* Horizontally center */
+            align-items: flex-start; /* Vertically center */
+            padding-top: 5vh;
+        }
+
+        .container {
+            width: 80vw;
+        }
+
+        .time{
+            width: 4%;
+        }
+
+        .td-15{
+            height: 10px;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 mb-3 mb-lg-5">
+            <div class="position-relative card table-nowrap table-card">
+                <div class="card-header align-items-center py-3">
+                    <h5 class="mb-0">Time Table</h5>
+                </div>
+                    <div class="table-responsive">
+                        <table class="table table-sm mb-0 text-center table-bordered">
+                            <thead class="small text-uppercase bg-body text-muted">
+                            <tr>
+                                <th class="time">Time</th>
+                                <th>MON</th>
+                                <th>TUE</th>
+                                <th>WED</th>
+                                <th>THU</th>
+                                <th>FRI</th>
+                            </tr>
+                            </thead>
+                            <tbody class="table-group-divider table-divider-color">
+                            <tr class="align-middle">
+                                <th rowspan="4">09:00</th>
+                                <td class="td-15"></td>
+                                <td>cvdsf</td>
+                                <td>ee</td>
+                                <td>cvdsf</td>
+                                <td>cvdsf</td>
+                            </tr>
+                            <tr class="align-middle">
+                                <td rowspan="4" class="table-primary">
+                                    <span>9시 30분 수업</span>
+                                    <br/>
+                                    <span>10시 15분 끝</span>
+                                </td>
+                                <td>cvdsf</td>
+                                <td>ee</td>
+                                <td>cvdsf</td>
+                                <td>cvdsf</td>
+                            </tr>
+                            <tr class="align-middle">
+                                <td>cvdsf</td>
+                                <td>cvdsf</td>
+                                <td>ee</td>
+                                <td>ee</td>
+                            </tr>
+                            <tr class="align-middle">
+                                <td>cvdsf</td>
+                                <td>cvdsf</td>
+                                <td>ee</td>
+                                <td>ee</td>
+                            </tr>
+
+                            <tr class="align-middle">
+                                <th rowspan="4">10:00</th>
+                                <td>cvdsf</td>
+                                <td>ee</td>
+                                <td>cvdsf</td>
+                                <td>cvdsf</td>
+                            </tr>
+                            <tr class="align-middle">
+                                <td>dafdfw</td>
+                                <td>cvdsf</td>
+                                <td>ee</td>
+                                <td>cvdsf</td>
+                                <td>cvdsf</td>
+                            </tr>
+                            <tr class="align-middle">
+                                <td>cvdsf</td>
+                                <td>cvdsf</td>
+                                <td>ee</td>
+                                <td>ee</td>
+                                <td>ee</td>
+                            </tr>
+                            <tr class="align-middle">
+                                <td>cvdsf</td>
+                                <td>cvdsf</td>
+                                <td>ee</td>
+                                <td>ee</td>
+                                <td>ee</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.umd.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('input[type="checkbox"]').change(function() {
+            var maxAllowed = 6; // Maximum allowed checkboxes to be checked
+            var checkedCheckboxes = $('input[type="checkbox"]:checked');
+
+            if (checkedCheckboxes.length >= maxAllowed) {
+                $('input[type="checkbox"]:not(:checked)').prop('disabled', true);
+            } else {
+                $('input[type="checkbox"]').prop('disabled', false);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

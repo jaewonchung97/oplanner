@@ -1,9 +1,14 @@
+drop table lec_time;
+drop table lecture;
+drop table attendance;
+drop table student;
+
 CREATE TABLE student
 (
     st_num      INT NOT NULL,
     st_name     VARCHAR(255),
-    ess_credits INT,
-    opt_credits INT,
+    credit_required INT,
+    credit_optional INT,
     PRIMARY KEY (st_num)
 );
 
@@ -39,3 +44,11 @@ create table lec_time
     primary key (lec_num, start_time, end_time, day),
     foreign key (lec_num) references lecture (lec_num) on delete cascade
 );
+
+insert into student values('202031233', '정재원');
+insert into attendance values('202031233','리눅스');
+insert into attendance values('202031233','데이터통신');
+insert into attendance values('202031233','C++');
+insert into attendance values('202031233','자료구조');
+insert into attendance values('202031233','운영체제');
+insert into attendance values('202031233','컴퓨터공학개론');
